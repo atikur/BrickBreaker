@@ -22,6 +22,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var touchLocation: CGPoint!
     
     var brickLayer: SKNode!
+    var ballReleased: Bool!
     
     // MARK: -
     
@@ -29,6 +30,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for touch in (touches as! Set<UITouch>) {
             touchLocation = touch.locationInNode(self)
+        }
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        if !ballReleased {
+            paddle.removeAllChildren()
+            
+            createBallWithLocation(CGPointMake(paddle.position.x, paddle.position.y + paddle.size.height * 0.5), velocity: CGVectorMake(0, ballSpeed))
+            ballReleased = true
         }
     }
     
@@ -98,7 +108,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func createBallWithLocation(position: CGPoint, velocity: CGVector) -> SKSpriteNode {
         let ball = SKSpriteNode(imageNamed: "BallBlue")
-        ball.name = name
+        ball.name = "ball"
         ball.position = position
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width * 0.5)
@@ -155,8 +165,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
         
-        createBallWithLocation(CGPointMake(self.size.width/2, self.size.height/2), velocity: CGVectorMake(40, 180))
-        
         // setup brick layer
         brickLayer = SKNode()
         brickLayer.position = CGPointMake(0, self.size.height)
@@ -171,6 +179,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody?.dynamic = false
         paddle.physicsBody?.categoryBitMask = PhysicsCategory.Paddle
         addChild(paddle)
+        
+        let ball = SKSpriteNode(imageNamed: "BallBlue")
+        ball.position = CGPointMake(0, paddle.size.height)
+        paddle.addChild(ball)
+        
+        ballReleased = false
     }
 
     required init?(coder aDecoder: NSCoder) {
