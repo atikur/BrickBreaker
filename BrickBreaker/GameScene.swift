@@ -134,6 +134,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 [.Green, .Green, nil, nil, .Green, .Green],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
+                [.Grey, .Grey, nil, nil, .Grey, .Grey],
                 [.Blue, .Blue, .Blue, .Blue, .Blue, .Blue],
             ]
         default:

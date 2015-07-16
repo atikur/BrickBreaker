@@ -13,12 +13,15 @@ class Brick: SKSpriteNode {
      enum BrickType {
         case Blue
         case Green
+        case Grey
     }
     
     var type: BrickType
+    var indestructible: Bool
     
     init(type: BrickType) {
         self.type = type
+        self.indestructible = (type == .Grey)
         
         let texture: SKTexture
         
@@ -27,6 +30,8 @@ class Brick: SKSpriteNode {
             texture = SKTexture(imageNamed: "BrickGreen")
         case .Blue:
             texture = SKTexture(imageNamed: "BrickBlue")
+        case .Grey:
+            texture = SKTexture(imageNamed: "BrickGrey")
         }
         
         super.init(texture: texture, color: nil, size: texture.size())
@@ -43,6 +48,9 @@ class Brick: SKSpriteNode {
         case .Blue:
             self.texture = SKTexture(imageNamed: "BrickGreen")
             self.type = .Green
+        case .Grey:
+            // indestructible bricks
+            break
         }
     }
 
