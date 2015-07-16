@@ -8,10 +8,17 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    struct PhysicsCategory {
+        static let Ball: UInt32     = 0
+        static let Paddle: UInt32   = 0b1
+    }
     
     var paddle: SKSpriteNode!
     var touchLocation: CGPoint!
+    
+    let ballSpeed: CGFloat = 200
     
     // MARK: -
     
@@ -44,6 +51,38 @@ class GameScene: SKScene {
         }
     }
     
+    // MARK: - SKPhysicsContactDelegate Methods
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        let firstBody: SKPhysicsBody
+        let secondBody: SKPhysicsBody
+        
+        if contact.bodyA.categoryBitMask > contact.bodyB.categoryBitMask {
+            firstBody = contact.bodyB
+            secondBody = contact.bodyA
+        } else {
+            firstBody = contact.bodyA
+            secondBody = contact.bodyB
+        }
+        
+        if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Paddle {
+                if firstBody.node?.position.y > secondBody.node?.position.y {
+                // get contact point in paddle coordinates
+                let pointInPaddle = secondBody.node?.convertPoint(contact.contactPoint, fromNode: self)
+                // get contact position as percentage of paddle's width
+                let contactPosition = (secondBody.node!.frame.size.width * 0.5 + pointInPaddle!.x) / secondBody.node!.frame.size.width
+                // cap percentage between 0 to 1 and flip it
+                let multiplier = 1.0 - fmax(fmin(contactPosition, 1.0), 0.0)
+                // calculate angle based on ball position in paddle
+                let angle = (CGFloat(M_PI_2) * multiplier) + CGFloat(M_PI_4)
+                // convert angle to vector
+                let direction = CGVectorMake(cos(angle), sin(angle))
+                
+                firstBody.velocity = CGVectorMake(direction.dx * ballSpeed, direction.dy * ballSpeed)
+            }
+        }
+    }
+    
     // MARK: -
     
     func createBallWithLocation(position: CGPoint, velocity: CGVector) -> SKSpriteNode {
@@ -56,6 +95,8 @@ class GameScene: SKScene {
         ball.physicsBody?.linearDamping = 0.0
         ball.physicsBody?.restitution = 1.0
         ball.physicsBody?.velocity = velocity
+        ball.physicsBody?.categoryBitMask = PhysicsCategory.Ball
+        ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle
         
         addChild(ball)
         return ball
@@ -70,12 +111,17 @@ class GameScene: SKScene {
         backgroundColor = SKColor(red: 0.15, green: 0.15, blue: 0.3, alpha: 1.0)
         
         self.physicsWorld.gravity = CGVectorMake(0, 0)
+        self.physicsWorld.contactDelegate = self
+        
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
         
         createBallWithLocation(CGPointMake(self.size.width/2, self.size.height/2), velocity: CGVectorMake(40, 180))
         
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
+        paddle.physicsBody = SKPhysicsBody(rectangleOfSize: paddle.size)
+        paddle.physicsBody?.dynamic = false
+        paddle.physicsBody?.categoryBitMask = PhysicsCategory.Paddle
         addChild(paddle)
     }
 
