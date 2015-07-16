@@ -88,7 +88,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // contact between ball and brick
         if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Brick {
-            secondBody.node?.removeFromParent()
+            if let brick = (secondBody.node as? Brick) {
+                brick.hit()
+            }
         }
     }
     
@@ -134,7 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // add some bricks
         for row in 0...4 {
             for col in 0...5 {
-                let brick = Brick(type: Brick.BrickType.Green)
+                let brick = Brick(type: .Blue)
                 brick.position = CGPointMake(
                     2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(col),
                     -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(row)))

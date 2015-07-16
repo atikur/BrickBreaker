@@ -18,6 +18,9 @@
 		24076FEC1B54C68A00F83C5B /* BrickGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24076FE91B54C68A00F83C5B /* BrickGreen@2x.png */; };
 		24076FED1B54C68A00F83C5B /* Paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24076FEA1B54C68A00F83C5B /* Paddle@2x.png */; };
 		246955C21B57CA09006CA0A3 /* Brick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246955C11B57CA09006CA0A3 /* Brick.swift */; };
+		246955C61B57D03C006CA0A3 /* BrickBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */; };
+		246955C71B57D03C006CA0A3 /* BrickGrey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C41B57D03C006CA0A3 /* BrickGrey@2x.png */; };
+		246955C81B57D03C006CA0A3 /* BrickYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +49,9 @@
 		24076FE91B54C68A00F83C5B /* BrickGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickGreen@2x.png"; sourceTree = "<group>"; };
 		24076FEA1B54C68A00F83C5B /* Paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Paddle@2x.png"; sourceTree = "<group>"; };
 		246955C11B57CA09006CA0A3 /* Brick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Brick.swift; sourceTree = "<group>"; };
+		246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickBlue@2x.png"; sourceTree = "<group>"; };
+		246955C41B57D03C006CA0A3 /* BrickGrey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickGrey@2x.png"; sourceTree = "<group>"; };
+		246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickYellow@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +134,9 @@
 		24076FE71B54C68A00F83C5B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */,
+				246955C41B57D03C006CA0A3 /* BrickGrey@2x.png */,
+				246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */,
 				24076FE81B54C68A00F83C5B /* BallBlue@2x.png */,
 				24076FE91B54C68A00F83C5B /* BrickGreen@2x.png */,
 				24076FEA1B54C68A00F83C5B /* Paddle@2x.png */,
@@ -220,7 +229,10 @@
 				24076FED1B54C68A00F83C5B /* Paddle@2x.png in Resources */,
 				24076FCF1B54C59500F83C5B /* Images.xcassets in Resources */,
 				24076FCD1B54C59500F83C5B /* Main.storyboard in Resources */,
+				246955C61B57D03C006CA0A3 /* BrickBlue@2x.png in Resources */,
 				24076FEB1B54C68A00F83C5B /* BallBlue@2x.png in Resources */,
+				246955C71B57D03C006CA0A3 /* BrickGrey@2x.png in Resources */,
+				246955C81B57D03C006CA0A3 /* BrickYellow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,9 +15,11 @@ class Brick: SKSpriteNode {
         case Green
     }
     
-    var type: BrickType!
+    var type: BrickType
     
     init(type: BrickType) {
+        self.type = type
+        
         let texture: SKTexture
         
         switch type {
@@ -32,6 +34,16 @@ class Brick: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Brick
+    }
+    
+    func hit() {
+        switch type {
+        case .Green:
+            self.runAction(SKAction.removeFromParent())
+        case .Blue:
+            self.texture = SKTexture(imageNamed: "BrickGreen")
+            self.type = .Green
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
