@@ -113,6 +113,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return ball
     }
     
+    func loadLevel(level: Int) {
+        var collection: [[Brick.BrickType!]] = []
+        
+        switch level {
+        case 0:
+            collection = [
+                [.Green, .Green, .Green, .Green, .Green, .Green],
+                [.Green, .Green, .Green, .Green, .Green, .Green],
+                [.Green, .Green, nil, nil, .Green, .Green],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [.Blue, .Blue, .Blue, .Blue, .Blue, .Blue],
+            ]
+        default:
+            break
+        }
+        
+        for (rowIndex, row) in enumerate(collection) {
+            for (colIndex, brickType) in enumerate(row) {
+                if brickType != nil {
+                    let brick = Brick(type: brickType)
+                    brick.position = CGPointMake(
+                        2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(colIndex),
+                        -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(rowIndex)))
+                    brickLayer.addChild(brick)
+                }
+            }
+        }
+    }
     
     // MARK: - Initializers
     
@@ -133,16 +162,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         brickLayer.position = CGPointMake(0, self.size.height)
         addChild(brickLayer)
         
-        // add some bricks
-        for row in 0...4 {
-            for col in 0...5 {
-                let brick = Brick(type: .Blue)
-                brick.position = CGPointMake(
-                    2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(col),
-                    -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(row)))
-                brickLayer.addChild(brick)
-            }
-        }
+        // load level
+        loadLevel(0)
         
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
