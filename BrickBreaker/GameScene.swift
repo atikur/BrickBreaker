@@ -15,10 +15,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Paddle: UInt32   = 0b1
     }
     
+    let ballSpeed: CGFloat = 200
+    
     var paddle: SKSpriteNode!
     var touchLocation: CGPoint!
     
-    let ballSpeed: CGFloat = 200
+    var brickLayer: SKNode!
     
     // MARK: -
     
@@ -116,6 +118,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
         
         createBallWithLocation(CGPointMake(self.size.width/2, self.size.height/2), velocity: CGVectorMake(40, 180))
+        
+        // setup brick layer
+        brickLayer = SKNode()
+        brickLayer.position = CGPointMake(0, self.size.height)
+        addChild(brickLayer)
+        
+        // add some bricks
+        for row in 0...4 {
+            for col in 0...5 {
+                let brick = SKSpriteNode(imageNamed: "BrickGreen")
+                brick.position = CGPointMake(
+                    2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(col),
+                    -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(row)))
+                brickLayer.addChild(brick)
+            }
+        }
         
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
