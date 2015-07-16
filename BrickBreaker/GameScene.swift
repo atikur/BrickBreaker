@@ -134,13 +134,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // add some bricks
         for row in 0...4 {
             for col in 0...5 {
-                let brick = SKSpriteNode(imageNamed: "BrickGreen")
+                let brick = Brick(type: Brick.BrickType.Green)
                 brick.position = CGPointMake(
                     2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(col),
                     -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(row)))
-                brick.physicsBody = SKPhysicsBody(rectangleOfSize: brick.size)
-                brick.physicsBody?.dynamic = false
-                brick.physicsBody?.categoryBitMask = PhysicsCategory.Brick
                 brickLayer.addChild(brick)
             }
         }
