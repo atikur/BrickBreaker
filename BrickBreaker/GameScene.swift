@@ -13,6 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     struct PhysicsCategory {
         static let Ball: UInt32     = 0
         static let Paddle: UInt32   = 0b1
+        static let Brick: UInt32    = 0b10
     }
     
     let ballSpeed: CGFloat = 200
@@ -67,6 +68,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             secondBody = contact.bodyB
         }
         
+        // contact between ball and paddle
         if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Paddle {
                 if firstBody.node?.position.y > secondBody.node?.position.y {
                 // get contact point in paddle coordinates
@@ -83,6 +85,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 firstBody.velocity = CGVectorMake(direction.dx * ballSpeed, direction.dy * ballSpeed)
             }
         }
+        
+        // contact between ball and brick
+        if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Brick {
+            secondBody.node?.removeFromParent()
+        }
     }
     
     // MARK: -
@@ -98,7 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody?.restitution = 1.0
         ball.physicsBody?.velocity = velocity
         ball.physicsBody?.categoryBitMask = PhysicsCategory.Ball
-        ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle
+        ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle | PhysicsCategory.Brick
         
         addChild(ball)
         return ball
@@ -131,6 +138,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 brick.position = CGPointMake(
                     2 + brick.size.width * 0.5 + (brick.size.width + 3) * CGFloat(col),
                     -(2 + brick.size.height * 0.5 + (brick.size.height + 3) * CGFloat(row)))
+                brick.physicsBody = SKPhysicsBody(rectangleOfSize: brick.size)
+                brick.physicsBody?.dynamic = false
+                brick.physicsBody?.categoryBitMask = PhysicsCategory.Brick
                 brickLayer.addChild(brick)
             }
         }
