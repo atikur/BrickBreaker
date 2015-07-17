@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var brickLayer: SKNode!
     var ballReleased: Bool!
+    var currentLevel: Int!
     
     // MARK: -
     
@@ -61,6 +62,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             touchLocation = touch.locationInNode(self)
+        }
+    }
+    
+    override func update(currentTime: NSTimeInterval) {
+        if isLevelComplete() {
+            currentLevel = currentLevel + 1
+            
+            if currentLevel > 2 {
+                currentLevel = 0
+            }
+            
+            loadLevel(currentLevel)
+            newBall()
         }
     }
     
@@ -125,34 +139,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func loadLevel(level: Int) {
+        brickLayer.removeAllChildren()
+        
         var collection: [[Brick.BrickType!]] = []
         
         switch level {
         case 0:
             collection = [
                 [.Green, .Green, .Green, .Green, .Green, .Green],
-                [nil, .Green, .Green, .Green, .Green, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, .Blue, .Blue, .Blue, .Blue, nil]
+
             ]
         case 1:
             collection = [
                 [.Green, .Green, .Blue, .Blue, .Green, .Green],
-                [.Blue, .Blue, nil, nil, .Blue, .Blue],
-                [.Blue, nil, nil, nil, nil, .Blue],
-                [nil, nil, .Green, .Green, nil, nil],
-                [.Green, nil, .Green, .Green, nil, .Green],
-                [.Green, .Green, .Grey, .Grey, .Green, .Green]
+
             ]
         case 2:
             collection = [
                 [.Green, nil, .Green, .Green, nil, .Green],
-                [.Green, nil, .Green, .Green, nil, .Green],
-                [nil, nil, .Grey, .Grey, nil, nil],
-                [.Blue, nil, nil, nil, nil, .Blue],
-                [nil, nil, .Green, .Green, nil, nil],
-                [.Grey, .Blue, .Green, .Green, .Blue, .Grey]
+
             ]
         default:
             break
@@ -169,6 +174,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         }
+    }
+    
+    func isLevelComplete() -> Bool {
+        for node in brickLayer.children {
+            if let brick = node as? Brick {
+                if !brick.indestructible {
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    func newBall() {
+        self.enumerateChildNodesWithName("ball") {
+            node, _ in
+            node.removeFromParent()
+        }
+        
+        let ball = SKSpriteNode(imageNamed: "BallBlue")
+        ball.position = CGPointMake(0, paddle.size.height)
+        paddle.addChild(ball)
+        
+        paddle.position = CGPointMake(self.size.width/2, paddle.position.y)
+        
+        ballReleased = false
     }
     
     // MARK: - Initializers
@@ -188,9 +220,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         brickLayer.position = CGPointMake(0, self.size.height)
         addChild(brickLayer)
         
-        // load level
-        loadLevel(2)
-        
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
         paddle.physicsBody = SKPhysicsBody(rectangleOfSize: paddle.size)
@@ -198,11 +227,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody?.categoryBitMask = PhysicsCategory.Paddle
         addChild(paddle)
         
-        let ball = SKSpriteNode(imageNamed: "BallBlue")
-        ball.position = CGPointMake(0, paddle.size.height)
-        paddle.addChild(ball)
+        currentLevel = 0
         
-        ballReleased = false
+        loadLevel(currentLevel)
+        newBall()
     }
 
     required init?(coder aDecoder: NSCoder) {
