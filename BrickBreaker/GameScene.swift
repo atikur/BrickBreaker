@@ -114,6 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width * 0.5)
         ball.physicsBody?.friction = 0.0
         ball.physicsBody?.linearDamping = 0.0
+        ball.physicsBody?.angularDamping = 0.0
         ball.physicsBody?.restitution = 1.0
         ball.physicsBody?.velocity = velocity
         ball.physicsBody?.categoryBitMask = PhysicsCategory.Ball
@@ -130,12 +131,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 0:
             collection = [
                 [.Green, .Green, .Green, .Green, .Green, .Green],
-                [.Green, .Green, .Green, .Green, .Green, .Green],
-                [.Green, .Green, nil, nil, .Green, .Green],
+                [nil, .Green, .Green, .Green, .Green, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
-                [.Grey, .Grey, nil, nil, .Grey, .Grey],
-                [.Blue, .Blue, .Blue, .Blue, .Blue, .Blue],
+                [nil, .Blue, .Blue, .Blue, .Blue, nil]
+            ]
+        case 1:
+            collection = [
+                [.Green, .Green, .Blue, .Blue, .Green, .Green],
+                [.Blue, .Blue, nil, nil, .Blue, .Blue],
+                [.Blue, nil, nil, nil, nil, .Blue],
+                [nil, nil, .Green, .Green, nil, nil],
+                [.Green, nil, .Green, .Green, nil, .Green],
+                [.Green, .Green, .Grey, .Grey, .Green, .Green]
+            ]
+        case 2:
+            collection = [
+                [.Green, nil, .Green, .Green, nil, .Green],
+                [.Green, nil, .Green, .Green, nil, .Green],
+                [nil, nil, .Grey, .Grey, nil, nil],
+                [.Blue, nil, nil, nil, nil, .Blue],
+                [nil, nil, .Green, .Green, nil, nil],
+                [.Grey, .Blue, .Green, .Green, .Blue, .Grey]
             ]
         default:
             break
@@ -172,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(brickLayer)
         
         // load level
-        loadLevel(0)
+        loadLevel(2)
         
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
