@@ -23,6 +23,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var brickLayer: SKNode!
     var ballReleased: Bool!
+    var positionBall: Bool!
     var currentLevel: Int!
     
     // MARK: -
@@ -30,16 +31,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         for touch in (touches as! Set<UITouch>) {
+            if !ballReleased {
+                positionBall = true
+            }
             touchLocation = touch.locationInNode(self)
         }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if !ballReleased {
+        if positionBall == true {
             paddle.removeAllChildren()
             
             createBallWithLocation(CGPointMake(paddle.position.x, paddle.position.y + paddle.size.height * 0.5), velocity: CGVectorMake(0, ballSpeed))
             ballReleased = true
+            positionBall = false
         }
     }
     
@@ -146,7 +151,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch level {
         case 0:
             collection = [
-                [.Green, .Green, .Green, .Green, .Green, .Green],
+                [.Green, .Green, ],
 
             ]
         case 1:
@@ -228,6 +233,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(paddle)
         
         currentLevel = 0
+        positionBall = false
         
         loadLevel(currentLevel)
         newBall()
