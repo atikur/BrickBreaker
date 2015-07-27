@@ -232,12 +232,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         self.physicsWorld.contactDelegate = self
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: self.frame)
+        self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(0, -128, self.size.width, self.size.height + 100))
         
         // setup brick layer
         brickLayer = SKNode()
-        brickLayer.position = CGPointMake(0, self.size.height)
+        brickLayer.position = CGPointMake(0, self.size.height - 28)
         addChild(brickLayer)
+        
+        // add hud bar
+        let bar = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(self.size.width, 28))
+        bar.position = CGPointMake(self.size.width/2, self.size.height - hud.size.height/2)
+        addChild(bar)
         
         hearts = [
             SKSpriteNode(imageNamed: "HeartFull"),
