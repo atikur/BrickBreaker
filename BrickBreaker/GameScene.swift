@@ -34,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hearts: [SKSpriteNode]!
     var levelDisplay: SKLabelNode!
     
+    var menu: Menu!
+    
     var lives: Int! {
         didSet {
             for (index, heart) in enumerate(hearts) {
@@ -297,6 +299,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         paddle.physicsBody?.dynamic = false
         paddle.physicsBody?.categoryBitMask = PhysicsCategory.Paddle
         addChild(paddle)
+        
+        // menu
+        menu = Menu()
+        menu.position = CGPointMake(self.size.width/2, self.size.height/2)
+        addChild(menu)
         
         currentLevel = 0
         lives = 2

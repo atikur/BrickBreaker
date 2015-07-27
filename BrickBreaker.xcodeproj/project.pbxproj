@@ -23,6 +23,9 @@
 		246955C81B57D03C006CA0A3 /* BrickYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */; };
 		249D90A71B666FC700A99398 /* BrickExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 249D90A51B666FC700A99398 /* BrickExplosion.sks */; };
 		249D90A81B666FC700A99398 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 249D90A61B666FC700A99398 /* spark.png */; };
+		24D2AAEF1B66762C005A0DB2 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24D2AAED1B66762C005A0DB2 /* Button@2x.png */; };
+		24D2AAF01B66762C005A0DB2 /* MenuPanel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24D2AAEE1B66762C005A0DB2 /* MenuPanel@2x.png */; };
+		24D2AAF21B667721005A0DB2 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D2AAF11B667721005A0DB2 /* Menu.swift */; };
 		24E4E4E31B6642BF007C0C4D /* HeartEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4E4E11B6642BF007C0C4D /* HeartEmpty@2x.png */; };
 		24E4E4E41B6642BF007C0C4D /* HeartFull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24E4E4E21B6642BF007C0C4D /* HeartFull@2x.png */; };
 /* End PBXBuildFile section */
@@ -58,6 +61,9 @@
 		246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickYellow@2x.png"; sourceTree = "<group>"; };
 		249D90A51B666FC700A99398 /* BrickExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BrickExplosion.sks; sourceTree = "<group>"; };
 		249D90A61B666FC700A99398 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		24D2AAED1B66762C005A0DB2 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button@2x.png"; sourceTree = "<group>"; };
+		24D2AAEE1B66762C005A0DB2 /* MenuPanel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuPanel@2x.png"; sourceTree = "<group>"; };
+		24D2AAF11B667721005A0DB2 /* Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		24E4E4E11B6642BF007C0C4D /* HeartEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartEmpty@2x.png"; sourceTree = "<group>"; };
 		24E4E4E21B6642BF007C0C4D /* HeartFull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFull@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,10 +110,11 @@
 				24076FE71B54C68A00F83C5B /* Graphics */,
 				24076FC31B54C59500F83C5B /* AppDelegate.swift */,
 				246955C11B57CA09006CA0A3 /* Brick.swift */,
-				249D90A51B666FC700A99398 /* BrickExplosion.sks */,
-				249D90A61B666FC700A99398 /* spark.png */,
+				24D2AAF11B667721005A0DB2 /* Menu.swift */,
 				24076FC71B54C59500F83C5B /* GameScene.swift */,
 				24076FC91B54C59500F83C5B /* GameViewController.swift */,
+				249D90A51B666FC700A99398 /* BrickExplosion.sks */,
+				249D90A61B666FC700A99398 /* spark.png */,
 				24076FCB1B54C59500F83C5B /* Main.storyboard */,
 				24076FCE1B54C59500F83C5B /* Images.xcassets */,
 				24076FD01B54C59500F83C5B /* LaunchScreen.xib */,
@@ -144,6 +151,8 @@
 		24076FE71B54C68A00F83C5B /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				24D2AAED1B66762C005A0DB2 /* Button@2x.png */,
+				24D2AAEE1B66762C005A0DB2 /* MenuPanel@2x.png */,
 				24E4E4E11B6642BF007C0C4D /* HeartEmpty@2x.png */,
 				24E4E4E21B6642BF007C0C4D /* HeartFull@2x.png */,
 				246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */,
@@ -241,7 +250,9 @@
 				24076FED1B54C68A00F83C5B /* Paddle@2x.png in Resources */,
 				24E4E4E41B6642BF007C0C4D /* HeartFull@2x.png in Resources */,
 				24076FCF1B54C59500F83C5B /* Images.xcassets in Resources */,
+				24D2AAF01B66762C005A0DB2 /* MenuPanel@2x.png in Resources */,
 				249D90A81B666FC700A99398 /* spark.png in Resources */,
+				24D2AAEF1B66762C005A0DB2 /* Button@2x.png in Resources */,
 				249D90A71B666FC700A99398 /* BrickExplosion.sks in Resources */,
 				24076FCD1B54C59500F83C5B /* Main.storyboard in Resources */,
 				246955C61B57D03C006CA0A3 /* BrickBlue@2x.png in Resources */,
@@ -270,6 +281,7 @@
 				246955C21B57CA09006CA0A3 /* Brick.swift in Sources */,
 				24076FCA1B54C59500F83C5B /* GameViewController.swift in Sources */,
 				24076FC41B54C59500F83C5B /* AppDelegate.swift in Sources */,
+				24D2AAF21B667721005A0DB2 /* Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
