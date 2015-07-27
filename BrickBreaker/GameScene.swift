@@ -14,6 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         static let Ball: UInt32     = 0
         static let Paddle: UInt32   = 0b1
         static let Brick: UInt32    = 0b10
+        static let Edge: UInt32     = 0b100
     }
     
     let ballSpeed: CGFloat = 200
@@ -36,6 +37,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var levelDisplay: SKLabelNode!
     
     var menu: Menu!
+    
+    var ballBounceSound: SKAction!
+    var levelUpSound: SKAction!
+    var loseLifeSound: SKAction!
+    var paddleBounceSound: SKAction!
     
     var lives: Int! {
         didSet {
@@ -126,8 +132,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             loadLevel(currentLevel)
             newBall()
             menu.show()
+            self.runAction(levelUpSound)
         } else if ballReleased == true && positionBall == false && self.childNodeWithName("ball") == nil {
             lives = lives - 1
+            self.runAction(loseLifeSound)
             
             if lives < 0 {
                 // Game over
@@ -157,7 +165,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // contact between ball and paddle
         if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Paddle {
-                if firstBody.node?.position.y > secondBody.node?.position.y {
+            if firstBody.node?.position.y > secondBody.node?.position.y {
                 // get contact point in paddle coordinates
                 let pointInPaddle = secondBody.node?.convertPoint(contact.contactPoint, fromNode: self)
                 // get contact position as percentage of paddle's width
@@ -170,6 +178,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let direction = CGVectorMake(cos(angle), sin(angle))
                 
                 firstBody.velocity = CGVectorMake(direction.dx * ballSpeed, direction.dy * ballSpeed)
+                
+                self.runAction(paddleBounceSound)
             }
         }
         
@@ -178,6 +188,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if let brick = (secondBody.node as? Brick) {
                 brick.hit()
             }
+            self.runAction(ballBounceSound)
+        }
+        
+        // contact between ball and edge
+        if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Edge {
+            self.runAction(ballBounceSound)
         }
     }
     
@@ -195,7 +211,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody?.restitution = 1.0
         ball.physicsBody?.velocity = velocity
         ball.physicsBody?.categoryBitMask = PhysicsCategory.Ball
-        ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle | PhysicsCategory.Brick
+        ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle | PhysicsCategory.Brick | PhysicsCategory.Edge
         
         addChild(ball)
         return ball
@@ -288,6 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: CGRectMake(0, -128, self.size.width, self.size.height + 100))
+        self.physicsBody?.categoryBitMask = PhysicsCategory.Edge
         
         // setup brick layer
         brickLayer = SKNode()
@@ -299,6 +316,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bar.position = CGPointMake(0, self.size.height)
         bar.anchorPoint = CGPointMake(0, 1)
         addChild(bar)
+        
+        // add sounds
+        ballBounceSound = SKAction.playSoundFileNamed("BallBounce.caf", waitForCompletion: false)
+        levelUpSound = SKAction.playSoundFileNamed("LevelUp.caf", waitForCompletion: false)
+        loseLifeSound = SKAction.playSoundFileNamed("LoseLife.caf", waitForCompletion: false)
+        paddleBounceSound = SKAction.playSoundFileNamed("PaddleBounce.caf", waitForCompletion: false)
         
         // level display
         levelDisplay = SKLabelNode(fontNamed: "Futura")

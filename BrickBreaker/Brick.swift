@@ -18,6 +18,7 @@ class Brick: SKSpriteNode {
     
     var type: BrickType
     var indestructible: Bool
+    var brickSmashSound: SKAction!
     
     init(type: BrickType) {
         self.type = type
@@ -39,11 +40,14 @@ class Brick: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: self.size)
         self.physicsBody?.dynamic = false
         self.physicsBody?.categoryBitMask = GameScene.PhysicsCategory.Brick
+        
+        brickSmashSound = SKAction.playSoundFileNamed("BrickSmash.caf", waitForCompletion: false)
     }
     
     func hit() {
         switch type {
         case .Green:
+            self.runAction(brickSmashSound)
             self.runAction(SKAction.removeFromParent())
             createExplosion()
         case .Blue:

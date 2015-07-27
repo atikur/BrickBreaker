@@ -21,6 +21,11 @@
 		246955C61B57D03C006CA0A3 /* BrickBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */; };
 		246955C71B57D03C006CA0A3 /* BrickGrey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C41B57D03C006CA0A3 /* BrickGrey@2x.png */; };
 		246955C81B57D03C006CA0A3 /* BrickYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */; };
+		248276101B6695D70061B17B /* BallBounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2482760B1B6695D70061B17B /* BallBounce.caf */; };
+		248276111B6695D70061B17B /* BrickSmash.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2482760C1B6695D70061B17B /* BrickSmash.caf */; };
+		248276121B6695D70061B17B /* LevelUp.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2482760D1B6695D70061B17B /* LevelUp.caf */; };
+		248276131B6695D70061B17B /* LoseLife.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2482760E1B6695D70061B17B /* LoseLife.caf */; };
+		248276141B6695D70061B17B /* PaddleBounce.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2482760F1B6695D70061B17B /* PaddleBounce.caf */; };
 		249D90A71B666FC700A99398 /* BrickExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 249D90A51B666FC700A99398 /* BrickExplosion.sks */; };
 		249D90A81B666FC700A99398 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 249D90A61B666FC700A99398 /* spark.png */; };
 		24D2AAEF1B66762C005A0DB2 /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 24D2AAED1B66762C005A0DB2 /* Button@2x.png */; };
@@ -59,6 +64,11 @@
 		246955C31B57D03C006CA0A3 /* BrickBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickBlue@2x.png"; sourceTree = "<group>"; };
 		246955C41B57D03C006CA0A3 /* BrickGrey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickGrey@2x.png"; sourceTree = "<group>"; };
 		246955C51B57D03C006CA0A3 /* BrickYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickYellow@2x.png"; sourceTree = "<group>"; };
+		2482760B1B6695D70061B17B /* BallBounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BallBounce.caf; sourceTree = "<group>"; };
+		2482760C1B6695D70061B17B /* BrickSmash.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BrickSmash.caf; sourceTree = "<group>"; };
+		2482760D1B6695D70061B17B /* LevelUp.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LevelUp.caf; sourceTree = "<group>"; };
+		2482760E1B6695D70061B17B /* LoseLife.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = LoseLife.caf; sourceTree = "<group>"; };
+		2482760F1B6695D70061B17B /* PaddleBounce.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PaddleBounce.caf; sourceTree = "<group>"; };
 		249D90A51B666FC700A99398 /* BrickExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BrickExplosion.sks; sourceTree = "<group>"; };
 		249D90A61B666FC700A99398 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		24D2AAED1B66762C005A0DB2 /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button@2x.png"; sourceTree = "<group>"; };
@@ -107,6 +117,7 @@
 		24076FC01B54C59500F83C5B /* BrickBreaker */ = {
 			isa = PBXGroup;
 			children = (
+				2482760A1B6695D70061B17B /* Sounds */,
 				24076FE71B54C68A00F83C5B /* Graphics */,
 				24076FC31B54C59500F83C5B /* AppDelegate.swift */,
 				246955C11B57CA09006CA0A3 /* Brick.swift */,
@@ -163,6 +174,18 @@
 				24076FEA1B54C68A00F83C5B /* Paddle@2x.png */,
 			);
 			path = Graphics;
+			sourceTree = "<group>";
+		};
+		2482760A1B6695D70061B17B /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				2482760B1B6695D70061B17B /* BallBounce.caf */,
+				2482760C1B6695D70061B17B /* BrickSmash.caf */,
+				2482760D1B6695D70061B17B /* LevelUp.caf */,
+				2482760E1B6695D70061B17B /* LoseLife.caf */,
+				2482760F1B6695D70061B17B /* PaddleBounce.caf */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,10 +268,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				248276121B6695D70061B17B /* LevelUp.caf in Resources */,
+				248276131B6695D70061B17B /* LoseLife.caf in Resources */,
 				24076FEC1B54C68A00F83C5B /* BrickGreen@2x.png in Resources */,
 				24076FD21B54C59500F83C5B /* LaunchScreen.xib in Resources */,
 				24076FED1B54C68A00F83C5B /* Paddle@2x.png in Resources */,
 				24E4E4E41B6642BF007C0C4D /* HeartFull@2x.png in Resources */,
+				248276141B6695D70061B17B /* PaddleBounce.caf in Resources */,
 				24076FCF1B54C59500F83C5B /* Images.xcassets in Resources */,
 				24D2AAF01B66762C005A0DB2 /* MenuPanel@2x.png in Resources */,
 				249D90A81B666FC700A99398 /* spark.png in Resources */,
@@ -258,6 +284,8 @@
 				246955C61B57D03C006CA0A3 /* BrickBlue@2x.png in Resources */,
 				24076FEB1B54C68A00F83C5B /* BallBlue@2x.png in Resources */,
 				246955C71B57D03C006CA0A3 /* BrickGrey@2x.png in Resources */,
+				248276111B6695D70061B17B /* BrickSmash.caf in Resources */,
+				248276101B6695D70061B17B /* BallBounce.caf in Resources */,
 				246955C81B57D03C006CA0A3 /* BrickYellow@2x.png in Resources */,
 				24E4E4E31B6642BF007C0C4D /* HeartEmpty@2x.png in Resources */,
 			);
