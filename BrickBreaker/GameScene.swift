@@ -28,6 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentLevel: Int! {
         didSet {
             levelDisplay.text = "LEVEL \(currentLevel + 1)"
+            menu.panelText.text = "LEVEL \(currentLevel + 1)"
         }
     }
     
@@ -53,42 +54,54 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
         for touch in (touches as! Set<UITouch>) {
-            if !ballReleased {
-                positionBall = true
+            if menu.hidden {
+                if !ballReleased {
+                    positionBall = true
+                }
             }
             touchLocation = touch.locationInNode(self)
         }
     }
     
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        if positionBall == true {
-            paddle.removeAllChildren()
-            
-            createBallWithLocation(CGPointMake(paddle.position.x, paddle.position.y + paddle.size.height * 0.5), velocity: CGVectorMake(0, ballSpeed))
-            ballReleased = true
-            positionBall = false
+        if menu.hidden {
+            if positionBall == true {
+                paddle.removeAllChildren()
+                
+                createBallWithLocation(CGPointMake(paddle.position.x, paddle.position.y + paddle.size.height * 0.5), velocity: CGVectorMake(0, ballSpeed))
+                ballReleased = true
+                positionBall = false
+            }
+        } else {
+            for touch in (touches as! Set<UITouch>) {
+                if menu.nodeAtPoint(touch.locationInNode(menu)).name == "Play Button" {
+                    menu.hide()
+                }
+            }
         }
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        for touch in (touches as! Set<UITouch>) {
-            let xMovement = touch.locationInNode(self).x - touchLocation.x
-            
-            paddle.position = CGPointMake(paddle.position.x + xMovement, paddle.position.y)
-            
-            let paddleMinX = -paddle.size.width * 0.25
-            let paddleMaxX = self.size.width + paddle.size.width * 0.25
-            
-            if paddle.position.x < paddleMinX {
-                paddle.position = CGPointMake(paddleMinX, paddle.position.y)
+        if menu.hidden {
+            for touch in (touches as! Set<UITouch>) {
+                let xMovement = touch.locationInNode(self).x - touchLocation.x
+                
+                paddle.position = CGPointMake(paddle.position.x + xMovement, paddle.position.y)
+                
+                let paddleMinX = -paddle.size.width * 0.25
+                let paddleMaxX = self.size.width + paddle.size.width * 0.25
+                
+                if paddle.position.x < paddleMinX {
+                    paddle.position = CGPointMake(paddleMinX, paddle.position.y)
+                }
+                
+                if paddle.position.x > paddleMaxX {
+                    paddle.position = CGPointMake(paddleMaxX, paddle.position.y)
+                }
+                
+                touchLocation = touch.locationInNode(self)
             }
-            
-            if paddle.position.x > paddleMaxX {
-                paddle.position = CGPointMake(paddleMaxX, paddle.position.y)
-            }
-            
-            touchLocation = touch.locationInNode(self)
         }
     }
     
@@ -112,13 +125,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             loadLevel(currentLevel)
             newBall()
+            menu.show()
         } else if ballReleased == true && positionBall == false && self.childNodeWithName("ball") == nil {
             lives = lives - 1
             
             if lives < 0 {
+                // Game over
                 currentLevel = 0
                 lives = 2
                 loadLevel(currentLevel)
+                menu.show()
             }
             
             newBall()

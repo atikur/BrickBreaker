@@ -10,8 +10,6 @@ import SpriteKit
 
 class Menu: SKNode {
     
-    var levelNumber: Int!
-    
     var menuPanel: SKSpriteNode!
     var playButton: SKSpriteNode!
     
@@ -20,9 +18,7 @@ class Menu: SKNode {
     
     override init() {
         super.init()
-        
-        levelNumber = 0
-        
+                
         menuPanel = SKSpriteNode(imageNamed: "MenuPanel")
         menuPanel.position = CGPointZero
         addChild(menuPanel)
@@ -35,10 +31,12 @@ class Menu: SKNode {
         menuPanel.addChild(panelText)
         
         playButton = SKSpriteNode(imageNamed: "Button")
+        playButton.name = "Play Button"
         playButton.position = CGPointMake(0, -(menuPanel.size.height * 0.5 + playButton.size.height * 0.5 + 10))
         addChild(playButton)
         
         buttonText = SKLabelNode(fontNamed: "Futura")
+        buttonText.name = "Play Button"
         buttonText.position = CGPointMake(0, 2)
         buttonText.text = "PLAY"
         buttonText.fontSize = 15
@@ -48,11 +46,33 @@ class Menu: SKNode {
     }
     
     func hide() {
+        let slideLeft = SKAction.moveByX(-260, y: 0, duration: 0.5)
+        slideLeft.timingMode = .EaseIn
+        let slideRight = SKAction.moveByX(260, y: 0, duration: 0.5)
+        slideRight.timingMode = .EaseIn
         
+        menuPanel.position = CGPointMake(0, menuPanel.position.y)
+        playButton.position = CGPointMake(0, playButton.position.y)
+        
+        menuPanel.runAction(slideLeft)
+        playButton.runAction(slideRight) {
+            self.hidden = true
+        }
     }
     
     func show() {
+        let slideLeft = SKAction.moveByX(-260, y: 0, duration: 0.5)
+        slideLeft.timingMode = .EaseOut
+        let slideRight = SKAction.moveByX(260, y: 0, duration: 0.5)
+        slideRight.timingMode = .EaseOut
         
+        menuPanel.position = CGPointMake(260, menuPanel.position.y)
+        playButton.position = CGPointMake(-260, playButton.position.y)
+        
+        menuPanel.runAction(slideLeft)
+        playButton.runAction(slideRight)
+        
+        self.hidden = false
     }
 
     required init?(coder aDecoder: NSCoder) {
