@@ -84,15 +84,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    override func didSimulatePhysics() {
+        self.enumerateChildNodesWithName("ball") {
+            node, _ in
+            if node.frame.origin.y + node.frame.size.height < 0 {
+                node.removeFromParent()
+            }
+        }
+    }
+    
     override func update(currentTime: NSTimeInterval) {
         if isLevelComplete() {
             currentLevel = currentLevel + 1
             
             if currentLevel > 2 {
                 currentLevel = 0
+                lives = 2
             }
             
             loadLevel(currentLevel)
+            newBall()
+        } else if ballReleased == true && positionBall == false && self.childNodeWithName("ball") == nil {
+            lives = lives - 1
+            
+            if lives < 0 {
+                currentLevel = 0
+                lives = 2
+                loadLevel(currentLevel)
+            }
+            
             newBall()
         }
     }
@@ -241,7 +261,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // add hud bar
         let bar = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(self.size.width, 28))
-        bar.position = CGPointMake(self.size.width/2, self.size.height - hud.size.height/2)
+        bar.position = CGPointMake(self.size.width/2, self.size.height - bar.size.height/2)
         addChild(bar)
         
         hearts = [
