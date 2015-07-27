@@ -24,9 +24,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var brickLayer: SKNode!
     var ballReleased: Bool!
     var positionBall: Bool!
-    var currentLevel: Int!
+    
+    var currentLevel: Int! {
+        didSet {
+            levelDisplay.text = "LEVEL \(currentLevel + 1)"
+        }
+    }
     
     var hearts: [SKSpriteNode]!
+    var levelDisplay: SKLabelNode!
     
     var lives: Int! {
         didSet {
@@ -261,8 +267,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // add hud bar
         let bar = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(self.size.width, 28))
-        bar.position = CGPointMake(self.size.width/2, self.size.height - bar.size.height/2)
+        bar.position = CGPointMake(0, self.size.height)
+        bar.anchorPoint = CGPointMake(0, 1)
         addChild(bar)
+        
+        // level display
+        levelDisplay = SKLabelNode(fontNamed: "Futura")
+        levelDisplay.text = "LEVEL 1"
+        levelDisplay.fontSize = 15
+        levelDisplay.fontColor = SKColor.whiteColor()
+        levelDisplay.horizontalAlignmentMode = .Left
+        levelDisplay.verticalAlignmentMode = .Top
+        levelDisplay.position = CGPointMake(10, -10)
+        bar.addChild(levelDisplay)
         
         hearts = [
             SKSpriteNode(imageNamed: "HeartFull"),
