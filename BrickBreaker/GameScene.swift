@@ -209,18 +209,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch level {
         case 0:
             collection = [
-                [.Green, .Green, ],
-
+                [.Green, .Green, .Green, .Green, .Green, .Green],
+                [nil, .Green, .Green, .Green, .Green, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, .Blue, .Blue, .Blue, .Blue, nil]
             ]
         case 1:
             collection = [
                 [.Green, .Green, .Blue, .Blue, .Green, .Green],
-
+                [.Blue, .Blue, nil, nil, .Blue, .Blue],
+                [.Blue, nil, nil, nil, nil, .Blue],
+                [nil, nil, .Green, .Green, nil, nil],
+                [.Green, nil, .Green, .Green, nil, .Green],
+                [.Green, .Green, .Grey, .Grey, .Green, .Green]
             ]
         case 2:
             collection = [
                 [.Green, nil, .Green, .Green, nil, .Green],
-
+                [.Green, nil, .Green, .Green, nil, .Green],
+                [nil, nil, .Grey, .Grey, nil, nil],
+                [.Blue, nil, nil, nil, nil, .Blue],
+                [nil, nil, .Green, .Green, nil, nil],
+                [.Grey, .Blue, .Green, .Green, .Blue, .Grey]
             ]
         default:
             break
@@ -271,7 +282,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override init(size: CGSize) {
         super.init(size: size)
         
-        backgroundColor = SKColor(red: 0.15, green: 0.15, blue: 0.3, alpha: 1.0)
+        backgroundColor = SKColor.whiteColor()
         
         self.physicsWorld.gravity = CGVectorMake(0, 0)
         self.physicsWorld.contactDelegate = self
@@ -284,7 +295,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(brickLayer)
         
         // add hud bar
-        let bar = SKSpriteNode(color: SKColor.blackColor(), size: CGSizeMake(self.size.width, 28))
+        let bar = SKSpriteNode(color: SKColor(red: 0.831, green: 0.831, blue: 0.831, alpha: 1), size: CGSizeMake(self.size.width, 28))
         bar.position = CGPointMake(0, self.size.height)
         bar.anchorPoint = CGPointMake(0, 1)
         addChild(bar)
@@ -293,7 +304,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelDisplay = SKLabelNode(fontNamed: "Futura")
         levelDisplay.text = "LEVEL 1"
         levelDisplay.fontSize = 15
-        levelDisplay.fontColor = SKColor.whiteColor()
+        levelDisplay.fontColor = SKColor.grayColor()
         levelDisplay.horizontalAlignmentMode = .Left
         levelDisplay.verticalAlignmentMode = .Top
         levelDisplay.position = CGPointMake(10, -10)
