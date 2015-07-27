@@ -26,6 +26,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var positionBall: Bool!
     var currentLevel: Int!
     
+    var hearts: [SKSpriteNode]!
+    
+    var lives: Int! {
+        didSet {
+            for (index, heart) in enumerate(hearts) {
+                if index < lives {
+                    heart.texture = SKTexture(imageNamed: "HeartFull")
+                } else {
+                    heart.texture = SKTexture(imageNamed: "HeartEmpty")
+                }
+            }
+        }
+    }
+    
     // MARK: -
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -225,6 +239,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         brickLayer.position = CGPointMake(0, self.size.height)
         addChild(brickLayer)
         
+        hearts = [
+            SKSpriteNode(imageNamed: "HeartFull"),
+            SKSpriteNode(imageNamed: "HeartFull")
+        ]
+        
+        for (index, heart) in enumerate(hearts) {
+            heart.position = CGPointMake(self.size.width - (16 + 29 * CGFloat(index)), self.size.height - 14)
+            addChild(heart)
+        }
+        
         paddle = SKSpriteNode(imageNamed: "Paddle")
         paddle.position = CGPointMake(self.size.width/2, 90)
         paddle.physicsBody = SKPhysicsBody(rectangleOfSize: paddle.size)
@@ -233,6 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(paddle)
         
         currentLevel = 0
+        lives = 2
         positionBall = false
         
         loadLevel(currentLevel)
