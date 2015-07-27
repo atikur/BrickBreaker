@@ -95,8 +95,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 paddle.position = CGPointMake(paddle.position.x + xMovement, paddle.position.y)
                 
-                let paddleMinX = -paddle.size.width * 0.25
-                let paddleMaxX = self.size.width + paddle.size.width * 0.25
+                var paddleMinX = -paddle.size.width * 0.25
+                var paddleMaxX = self.size.width + paddle.size.width * 0.25
+                
+                if positionBall == true {
+                    paddleMinX = paddle.size.width * 0.5
+                    paddleMaxX = self.size.width - paddle.size.width * 0.5
+                }
                 
                 if paddle.position.x < paddleMinX {
                     paddle.position = CGPointMake(paddleMinX, paddle.position.y)
