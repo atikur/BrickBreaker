@@ -14,15 +14,18 @@ class Brick: SKSpriteNode {
         case Blue
         case Green
         case Grey
+        case Yellow
     }
     
     var type: BrickType
     var indestructible: Bool
     var brickSmashSound: SKAction!
+    var spawnsExtraBall: Bool!
     
     init(type: BrickType) {
         self.type = type
         self.indestructible = (type == .Grey)
+        self.spawnsExtraBall = (type == .Yellow)
         
         let texture: SKTexture
         
@@ -33,6 +36,8 @@ class Brick: SKSpriteNode {
             texture = SKTexture(imageNamed: "BrickBlue")
         case .Grey:
             texture = SKTexture(imageNamed: "BrickGrey")
+        case .Yellow:
+            texture = SKTexture(imageNamed: "BrickYellow")
         }
         
         super.init(texture: texture, color: nil, size: texture.size())
@@ -46,7 +51,7 @@ class Brick: SKSpriteNode {
     
     func hit() {
         switch type {
-        case .Green:
+        case .Green, .Yellow:
             self.runAction(brickSmashSound)
             self.runAction(SKAction.removeFromParent())
             createExplosion()

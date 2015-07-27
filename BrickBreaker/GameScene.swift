@@ -191,6 +191,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // contact between ball and brick
         if firstBody.categoryBitMask == PhysicsCategory.Ball && secondBody.categoryBitMask == PhysicsCategory.Brick {
             if let brick = (secondBody.node as? Brick) {
+                if brick.spawnsExtraBall == true {
+                    spawnExtraBall(brickLayer.convertPoint(brick.position, toNode: self))
+                }
+                
                 brick.hit()
             }
             self.runAction(ballBounceSound)
@@ -217,9 +221,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody?.velocity = velocity
         ball.physicsBody?.categoryBitMask = PhysicsCategory.Ball
         ball.physicsBody?.contactTestBitMask = PhysicsCategory.Paddle | PhysicsCategory.Brick | PhysicsCategory.Edge
+        ball.physicsBody?.collisionBitMask = PhysicsCategory.Paddle | PhysicsCategory.Brick | PhysicsCategory.Edge
         
         addChild(ball)
         return ball
+    }
+    
+    func spawnExtraBall(position: CGPoint) {
+        let direction: CGVector
+        
+        if arc4random_uniform(2) == 0 {
+            direction = CGVectorMake(CGFloat(cos(M_PI_4)), CGFloat(sin(M_PI_4)))
+        } else {
+            direction = CGVectorMake(CGFloat(cos(M_PI * 0.75)), CGFloat(sin(M_PI * 0.75)))
+        }
+        
+        createBallWithLocation(position, velocity: CGVectorMake(direction.dx * ballSpeed, direction.dy * ballSpeed))
     }
     
     func loadLevel(level: Int) {
@@ -231,7 +248,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case 0:
             collection = [
                 [.Green, .Green, .Green, .Green, .Green, .Green],
-                [nil, .Green, .Green, .Green, .Green, nil],
+                [nil, .Green, .Green, .Yellow, .Green, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, .Blue, .Blue, .Blue, .Blue, nil]
@@ -241,17 +258,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 [.Green, .Green, .Blue, .Blue, .Green, .Green],
                 [.Blue, .Blue, nil, nil, .Blue, .Blue],
                 [.Blue, nil, nil, nil, nil, .Blue],
-                [nil, nil, .Green, .Green, nil, nil],
-                [.Green, nil, .Green, .Green, nil, .Green],
+                [nil, nil, .Yellow, .Green, nil, nil],
+                [.Green, nil, .Green, .Green, nil, .Yellow],
                 [.Green, .Green, .Grey, .Grey, .Green, .Green]
             ]
         case 2:
             collection = [
-                [.Green, nil, .Green, .Green, nil, .Green],
+                [.Green, nil, .Yellow, .Green, nil, .Green],
                 [.Green, nil, .Green, .Green, nil, .Green],
                 [nil, nil, .Grey, .Grey, nil, nil],
                 [.Blue, nil, nil, nil, nil, .Blue],
-                [nil, nil, .Green, .Green, nil, nil],
+                [nil, nil, .Green, .Yellow, nil, nil],
                 [.Grey, .Blue, .Green, .Green, .Blue, .Grey]
             ]
         default:
