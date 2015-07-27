@@ -45,12 +45,30 @@ class Brick: SKSpriteNode {
         switch type {
         case .Green:
             self.runAction(SKAction.removeFromParent())
+            createExplosion()
         case .Blue:
             self.texture = SKTexture(imageNamed: "BrickGreen")
             self.type = .Green
         case .Grey:
             // indestructible bricks
             break
+        }
+    }
+    
+    func createExplosion() {
+        let path = NSBundle.mainBundle().pathForResource("BrickExplosion", ofType: "sks")
+        if let path = path {
+            if let explosion = NSKeyedUnarchiver.unarchiveObjectWithFile(path) as? SKEmitterNode {
+                explosion.position = self.position
+                self.parent?.addChild(explosion)
+                
+                let removeExplosion = SKAction.sequence([
+                    SKAction.waitForDuration(NSTimeInterval(explosion.particleLifetime + explosion.particleLifetimeRange)),
+                    SKAction.removeFromParent()
+                ])
+                
+                explosion.runAction(removeExplosion)
+            }
         }
     }
 
